@@ -1,4 +1,6 @@
-This repo compares two trajectory optimization libraries.  They were chosen based on their programming paradigm.  The OOP-TOL is written in an object-oriented programming paradigm.  It uses a CasADi backend to compute functions and their derivatives for use in IPOPT.  The other library, AML-TOL, is written in declarative programming paradigm in the algebraic modeling language AMPL.
+WORK IN PROGRESS --- We'll clean this repository up as time permits.
+
+This repo compares two trajectory optimization libraries.  They were chosen based on their programming paradigm.  The OOP-TOL is written in an object-oriented programming paradigm.  It uses a CasADi backend to compute functions and their derivatives for use in IPOPT.  The other library, AML-TOL, is written in a declarative programming paradigm in the algebraic modeling language AMPL.
 
 To replicate our results, you will need Docker and an AMPL key.  We also provide the .csv files that we used to report our results.
 

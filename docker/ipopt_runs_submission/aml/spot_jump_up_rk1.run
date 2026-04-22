@@ -1,0 +1,47 @@
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#* settings
+#----------- clear and reload
+reset;
+model spot_jump_up_rk1.mod;
+data spot_jump_up_rk1.dat;
+
+#----------- options
+option presolve_eps 1e-14;
+option solver ipopt;
+
+option ipopt_options 'tol=0.001 constr_viol_tol=0.001 max_iter=2000 print_user_options=yes';
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#* settings!
+
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#* script
+#----------- problem
+problem SPOT :
+  JUMP,
+  q, v, a, f,
+  h, t,
+  ODE_GLOB, ODE_LOC,
+  ODE_GLOBTIME, ODE_LOCTIME,
+  X0, XF,
+  XBNDS, ABNDS, FBNDS, TAUBNDS,
+  A_RK_LCL, F_RK_LCL,
+  NO_FOOT_VELOCITY_ON_GROUND,
+  NO_FORCE_DURING_JUMPING,
+  FC_GROUND_1, FC_GROUND_2, FC_GROUND_3,
+  T0, DT
+;
+
+#----------- solve
+solve SPOT;
+#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#*#* script!
+
+#----------- print timings (elapsed wall time = _ampl_elapsed_time + _solve_elapsed_time)
+print 'AMPL', _ampl_elapsed_time, _ampl_system_time, _ampl_user_time, _ampl_time;
+print 'SOLVE', _solve_elapsed_time, _solve_system_time, _solve_user_time, _solve_time;
+print 'VARS', _nvars, _snvars;
+print 'CONS', _ncons, _sncons;
+
+#----------- save results to file
+print {j in 1.._nvars : match(_varname[j], '^x\[') > 0} : j, _varname[j], _var[j] > spot_jump_up_rk1.out;
+print {j in 1.._nvars : match(_varname[j], '^t\[') > 0} : j, _varname[j], _var[j] >> spot_jump_up_rk1.out;
+print {j in 1.._nvars : match(_varname[j], '^tau\[') > 0} : j, _varname[j], _var[j] >> spot_jump_up_rk1.out;
+print {j in 1.._nvars : match(_varname[j], '^a\[') > 0} : j, _varname[j], _var[j] >> spot_jump_up_rk1.out;
+print {j in 1.._nvars : match(_varname[j], '^f\[') > 0} : j, _varname[j], _var[j] >> spot_jump_up_rk1.out;
+close spot_jump_up_rk1.out;
