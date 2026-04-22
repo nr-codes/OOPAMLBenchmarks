@@ -1,0 +1,49 @@
+github.com/AlDanial/cloc v 2.08  T=1.49 s (22.8 files/s, 6002.0 lines/s)
+---------------------------------------------------------------------------------------------
+File                                                      blank        comment           code
+---------------------------------------------------------------------------------------------
+horizon\variables.py                                        450            971            647
+horizon\utils\refiner.py                                    185            266            471
+horizon\problem.py                                          225            348            405
+horizon\functions.py                                        161            295            283
+horizon\utils\plotter.py                                     78             10            219
+horizon\solvers\ilqr.py                                      76             23            182
+horizon\solvers\solver.py                                    51             71            181
+horizon\utils\replayer_fd.py                                 69             17            180
+horizon\utils\replayer.py                                    63             18            172
+horizon\utils\resampler_trajectory.py                        67             72            165
+horizon\ros\replay_trajectory.py                             42             32            150
+horizon\utils\collision.py                                   44             14            130
+horizon\utils\send_to_gazebo.py                              43             10            126
+horizon\utils\replayer_mx.py                                 33              9            125
+horizon\utils\kin_dyn.py                                     47            114            114
+horizon\utils\replayer_fd_mx.py                              31             15            106
+horizon\solvers\nlpsol.py                                    49             94             93
+horizon\transcriptions\methods.py                            39             61             87
+horizon\transcriptions\integrators.py                        39             46             85
+horizon\solvers\sqp.py                                       33             18             76
+horizon\utils\utils.py                                       33             47             70
+horizon\utils\mat_storer.py                                  20             11             64
+horizon\misc_function.py                                     12              5             53
+horizon\transcriptions\trial_integrator.py                   16             16             42
+horizon\utils\vis_refiner_global.py                          18              0             42
+horizon\transcriptions\transcriptor.py                       15             10             39
+horizon\utils\rti.py                                          9              6             24
+horizon\ros\tf_broadcaster_simple.py                          2              0             21
+horizon\solvers\blocksqp.py                                   4              0             19
+horizon\solvers\ipopt.py                                      2              0             10
+horizon\type_doc.py                                           0              4              6
+horizon\ros\utils.py                                          2              6              4
+horizon\__init__.py                                           0              0              1
+horizon\solvers\__init__.py                                   0              0              1
+---------------------------------------------------------------------------------------------
+SUM:                                                       1958           2609           4393
+---------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Python                          34           1958           2609           4393
+-------------------------------------------------------------------------------
+SUM:                            34           1958           2609           4393
+-------------------------------------------------------------------------------
