@@ -19,5 +19,5 @@ if errorlevel 1 (
 )
 echo Docker is ready!
 
-wsl bash ./docker_local_bash.sh %1
+wsl bash ./docker_local_bash.sh %*
 REM del "%USERPROFILE%\.wslconfig"
