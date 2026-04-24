@@ -1,6 +1,6 @@
 # Quickstart
 * Install Docker and the docker image *francescoruscelli/horizon*: `docker pull francescoruscelli/horizon`.
-* Create an AMPL account, obtain a key, and download the CLI tarball to [./docker/src](./docker/src/ampl.linux64.tgz).  Do not extract the tarball.  Keep it compressed with the filename *ampl.linux64.tgz*.
+* Create an AMPL account, obtain a key, and download the CLI tarball to [./docker/src/ampl.linux64.tgz](./docker/src/ampl.linux64.tgz).  Do not extract the tarball.  Keep it compressed with the filename *ampl.linux64.tgz*.
 * Are you in Windows?
   * Install WSL and Ubuntu 22.04 (or other Linux variant with a bash shell).
   * Run `cloc-mecc2026.cmd` in the [loc](./loc) folder.
