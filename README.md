@@ -1,15 +1,41 @@
-WORK IN PROGRESS --- We'll clean this repository up as time permits.
+# Overview
+How do programming paradigms affect the design of robotics-focused trajectory optimization libraries (TOLs) when it comes to library features, lines of code (LOC), reproducibility, and performance?  This repository explores this question through a case study that compares two trajectory optimization libraries, one written in an object-oriented programming paradigm (OOP-TOL) and the other in a declarative programming paradigm (AML-TOL).
 
-This repo compares two trajectory optimization libraries.  They were chosen based on their programming paradigm.  The OOP-TOL is written in an object-oriented programming paradigm.  It uses a CasADi backend to compute functions and their derivatives for use in IPOPT.  The other library, AML-TOL, is written in a declarative programming paradigm in the algebraic modeling language AMPL.
+In particular, the repository contains the code we used to benchmark each TOL across two trajectory optimization problems: the cart-pole swing-up and Spot jump-twist optimal trajectory tasks.
 
-To replicate our results, you will need Docker and an AMPL key.  We also provide the .csv files that we used to report our results.
+The OOP-TOL is written in python and uses CasADi as a backend to compute functions and their derivatives.  The AML-TOL is written in the algebraic modeling language (AML) AMPL.  Each library generates an NLP that is then sent to IPOPT.
 
-We tested the OOP-TOL at v0.4.5 in its Docker image.
-The image comes installed with python v3.6.9, CasADi
-v3.5.5, Pinocchio v2.6.4, and IPOPT v3.12.3. The AML-
-TOL runs in AMPL v4.0.1.202411072004, which comes
-installed with IPOPT v3.12.13. The differences in IPOPT
-versions are minor bug fixes. We ran both TOLs inside the
-Docker image. Our benchmark code is available in GitHub.
-Users will need an AMPL license to run the AML-TOL,
-which may be free in certain cases.
+We benchmarked both TOLs and their dependencies inside the OOP-TOL’s Docker image. The image is installed with the OOP-TOL v0.4.5, python v3.6.9, CasADi v3.5.5, and Pinocchio v2.6.4. We copied the AML-TOL with AMPL v20250901. CasADi and AMPL each come with their own versions of IPOPT at v3.12.3 and v3.12.13, respectively. The differences between versions are minor updates and bug fixes.
+
+The code was developed in Windows 11 and tested in WSL's Ubuntu 22.04.5 LTS and in a native Ubuntu 24.04.4
+LTS build (i.e. running on a laptop directly, not virtualized).  Because of the Windows 11 development environment, the code is a bit like the monster in Frankenstein.  A few of the parts only run in Windows (the LOC code) and the rest in a Linux OS (the performance code).
+
+# LOC Code
+The LOC code runs in a Windows command shell.  All necessary files are in the [loc](./loc) folder.  It should be straightforward to port the code to other scripting languages.
+
+## Pre-Requisites
+None
+
+## Running the Code
+In a Windows Command or Powershell, run *cloc-mecc2026.cmd* in the [loc](./loc) folder.
+
+# Performance Code
+The performance code runs in a bash shell.  We tried to only call Linux built-in shell command with the exception of Docker.  All necessary files are in the [docker](./docker) folder.
+
+## Pre-Requisite
+* Install Docker in your target OS.
+  * Are you in Windows?  Then install Docker for Windows.
+  * Are you in Linux/MacOS?  Then install Docker for Linux/MacOS.
+* Install the OOP-TOL docker image: `docker pull francescoruscelli/horizon`.
+  * Further instructions are here: https://advrhumanoids.github.io/horizon/docker.html.
+* Download and place AMPL's command-line interface tarball in the [src/](./docker/src/) folder.
+  * The file must be *ampl.linux64.tgz* with path *docker/src/ampl.linux64.tgz* relative to the top-level repository directory.
+  * You download the Linux tarball from the AMPL portal: https://portal.ampl.com/account/ampl/.
+    * You will need an AMPL account and key from the AMPL portal.  Licenses that grant you a key are free if you are an academic.  A Community Edition is also available for download.  Make sure to read the license restrictions.  Our code needs the ability to activate the your key at least once per run.
+  * You may potentially also need an active Internet connection, so that AMPL can ping the mothership.  Many licenses are an always-on DRM.
+  * Are you in Windows? Then install Ubuntu 22.04 in WSL.  Other Linux distros should also work, but have not been tested.
+
+# Running the Code
+* Are you in Windows? Then run `docker_local_cmd.bat --key YOUR_AMPL_KEY --runs NUM_OF_RUNS` in the [docker/](./docker) folder in a Command or Powershell.  This will launch an instance of WSL, which will then launch a Docker container.  Make sure the default WSL has a bash shell.
+* Are you in Ubuntu 22.04? Then run `docker_local_bash.sh --key YOUR_AMPL_KEY --runs NUM_OF_RUNS` in the [docker/](./docker) folder in a bash shell.  This will directly launch a Docker container.
+  * MacOS and other Linux distros should also work, but have not been tested.
