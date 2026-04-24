@@ -17,7 +17,7 @@ In particular, the repository contains the code we used to benchmark each TOL ac
 
 The OOP-TOL is written in python and uses CasADi as a backend to compute functions and their derivatives.  The AML-TOL is written in the algebraic modeling language (AML) AMPL.  Each library generates an NLP that is then sent to IPOPT.
 
-We benchmarked both TOLs and their dependencies inside the OOP-TOL’s Docker image. The image is installed with the OOP-TOL v0.4.5, python v3.6.9, CasADi v3.5.5, and Pinocchio v2.6.4. We copied the AML-TOL with AMPL v20250901. CasADi and AMPL each come with their own versions of IPOPT at v3.12.3 and v3.12.13, respectively. The differences between versions are minor updates and bug fixes.
+We benchmarked both TOLs and their dependencies inside the OOP-TOL’s Docker image. The image is installed with the OOP-TOL v0.4.5, python v3.6.9, CasADi v3.5.5, and Pinocchio v2.6.4. We copied the AML-TOL with AMPL v20250901 into a running container. CasADi and AMPL each come with their own versions of IPOPT at v3.12.3 and v3.12.13, respectively. The differences between versions are minor updates and bug fixes.
 
 The code was developed in Windows 11 and tested in WSL's Ubuntu 22.04.5 LTS and in a native Ubuntu 24.04.4
 LTS build (i.e. running on a laptop directly, not virtualized).  Because of the Windows 11 development environment, the code is a bit like the monster in Frankenstein.  A few of the parts only run in Windows (the LOC code) and the rest in a Linux OS (the performance code).
@@ -29,7 +29,7 @@ The LOC code runs in a Windows command shell.  All necessary files are in the [l
 None
 
 ## Running the Code
-In a Windows Command or Powershell, run *cloc-mecc2026.cmd* in the [loc](./loc) folder.
+In a Windows Command or Powershell, run `cloc-mecc2026.cmd` in the [loc](./loc) folder.
 
 # Performance Code
 The performance code runs in a bash shell.  We tried to only call Linux built-in shell command with the exception of Docker.  All necessary files are in the [docker](./docker) folder.
@@ -41,11 +41,11 @@ The performance code runs in a bash shell.  We tried to only call Linux built-in
 * Install the OOP-TOL docker image: `docker pull francescoruscelli/horizon`.
   * Further instructions are here: https://advrhumanoids.github.io/horizon/docker.html.
 * Download and place AMPL's command-line interface tarball in the [src/](./docker/src/) folder.
-  * The file must be *ampl.linux64.tgz* with path *docker/src/ampl.linux64.tgz* relative to the top-level repository directory.
+  * The file must be called *ampl.linux64.tgz* with path *docker/src/ampl.linux64.tgz* relative to the top-level repository directory.
   * You download the Linux tarball from the AMPL portal: https://portal.ampl.com/account/ampl/.
-    * You will need an AMPL account and key from the AMPL portal.  Licenses that grant you a key are free if you are an academic.  A Community Edition is also available for download.  Make sure to read the license restrictions.  Our code needs the ability to activate the your key at least once per run.
-  * You may potentially also need an active Internet connection, so that AMPL can ping the mothership.  Many licenses are an always-on DRM.
-  * Are you in Windows? Then install Ubuntu 22.04 in WSL.  Other Linux distros should also work, but have not been tested.
+    * You will need an AMPL account and key from the AMPL portal.  Licenses that grant you a key are free if you are an academic.  A Community Edition is also available for download.  Make sure to read the license restrictions.  Our code needs the ability to activate your key at least once per run.
+* You may potentially also need an active Internet connection, so that AMPL can ping the mothership.  Many licenses are an always-on DRM.
+* Are you in Windows? Then install Ubuntu 22.04 in WSL.  Other Linux distros should also work, but have not been tested.
 
 # Running the Code
 * Are you in Windows? Then run `docker_local_cmd.bat --key YOUR_AMPL_KEY --runs NUM_OF_RUNS` in the [docker/](./docker) folder in a Command or Powershell.  This will launch an instance of WSL, which will then launch a Docker container.  Make sure the default WSL has a bash shell.
