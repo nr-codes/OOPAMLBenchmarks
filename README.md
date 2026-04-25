@@ -43,8 +43,7 @@ The performance code runs in a bash shell.  We tried to only call Linux built-in
 * Download and place AMPL's command-line interface tarball in the [src/](./docker/src/) folder.
   * The file must be called *ampl.linux64.tgz* with path *docker/src/ampl.linux64.tgz* relative to the top-level repository directory.
   * You download the Linux tarball from the AMPL portal: https://portal.ampl.com/account/ampl/.
-    * You will need an AMPL account and key from the AMPL portal.  Academic and Community Edition licenses are currently free.  
-      Make sure to read the license restrictions.  Our code needs the ability to activate your key at least once per run.
+    * You will need an AMPL account and key from the AMPL portal.  Academic and Community Edition licenses are currently free.  Make sure to read the license restrictions.  Our code needs the ability to activate your key at least once per run.
 * You may potentially also need an active Internet connection, so that AMPL can ping the mothership.  Several licenses only work as always-on DRM.
 * Are you in Windows? Then install Ubuntu 22.04 in WSL.  Other Linux distros should also work, but have not been tested.
 
