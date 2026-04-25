@@ -49,18 +49,18 @@ fi
 read -r -d '' REMOTE < src/docker_remote_template.sh
 
 # aml version
-AMPL_REMOTE="~/ampl/ampl"
-AMPL_REMOTE="${REMOTE//RUN/$AMPL_REMOTE}"
-AMPL_REMOTE="${AMPL_REMOTE//SCRIPT/run}"
-AMPL_REMOTE="${AMPL_REMOTE//LIB/aml}"
-AMPL_REMOTE="${AMPL_REMOTE//OUT/out}"
+AML_REMOTE="~/ampl/ampl"
+AML_REMOTE="${REMOTE//RUN/$AML_REMOTE}"
+AML_REMOTE="${AML_REMOTE//SCRIPT/run}"
+AML_REMOTE="${AML_REMOTE//LIB/aml}"
+AML_REMOTE="${AML_REMOTE//OUT/out}"
 
 # oop version
-HORIZON_REMOTE="python3"
-HORIZON_REMOTE="${REMOTE//RUN/$HORIZON_REMOTE}"
-HORIZON_REMOTE="${HORIZON_REMOTE//SCRIPT/py}"
-HORIZON_REMOTE="${HORIZON_REMOTE//LIB/oop}"
-HORIZON_REMOTE="${HORIZON_REMOTE//OUT/mat}"
+OOP_REMOTE="python3"
+OOP_REMOTE="${REMOTE//RUN/$OOP_REMOTE}"
+OOP_REMOTE="${OOP_REMOTE//SCRIPT/py}"
+OOP_REMOTE="${OOP_REMOTE//LIB/oop}"
+OOP_REMOTE="${OOP_REMOTE//OUT/mat}"
 
 # container info
 IMAGE=francescoruscelli/horizon
@@ -69,13 +69,13 @@ CONTAINER_NAME=borealis
 AMPL="tar -xvf ampl.linux64.tgz && mv ampl.linux-intel64 ampl"
 VIM="sudo apt update && sudo apt install vim -y"
 
-HORIZON="tar -xvf oop.tgz && cd oop && \
+OOP="tar -xvf oop.tgz && cd oop && \
   echo 'REMOTE' > docker_remote_oop.sh && . docker_remote_oop.sh"
-HORIZON="${HORIZON//REMOTE/$HORIZON_REMOTE}"
+OOP="${OOP//REMOTE/$OOP_REMOTE}"
 
-AMPLIFY="tar -xvf aml.tgz && cd aml && \
+AML="tar -xvf aml.tgz && cd aml && \
   echo 'REMOTE' > docker_remote_ampl.sh && . docker_remote_ampl.sh"
-AMPLIFY="${AMPLIFY//REMOTE/$AMPL_REMOTE}"
+AML="${AML//REMOTE/$AML_REMOTE}"
 
 # copy content and run
 cp -r src/urdf src/replay oop/
@@ -93,14 +93,14 @@ for ((i = 1; i <= RUNS; i++)); do
   docker exec borealis bash -c "ampl/amplkey activate --uuid ${KEY}"
 
   docker cp ./aml.tgz "${CONTAINER_NAME}:/home/user"
-  docker exec borealis bash -c "${AMPLIFY}"
+  docker exec borealis bash -c "${AML}"
 
   docker cp "${CONTAINER_NAME}:/home/user/aml_out.tgz" .
   tar -xvf aml_out.tgz
 
   # OOP
   docker cp ./oop.tgz "${CONTAINER_NAME}:/home/user"
-  docker exec borealis bash -c "${HORIZON}"
+  docker exec borealis bash -c "${OOP}"
   docker cp "${CONTAINER_NAME}:/home/user/oop_out.tgz" .
   tar -xvf oop_out.tgz
 
