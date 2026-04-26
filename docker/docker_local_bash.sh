@@ -109,7 +109,7 @@ for ((i = 1; i <= RUNS; i++)); do
 done
 
 ./src/parse_ipopt.awk aml_out/*.txt oop_out/*.txt > ipopt_output.csv
-cp src/ipopt_output.xlsx
+cp src/ipopt_output.xlsx .
 
 tar -czvf ipopt_runs.tgz oop_out/*.txt oop_out/*.mat \
   aml_out/*.txt aml_out/*.out oop aml \
