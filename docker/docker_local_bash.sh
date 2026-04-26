@@ -83,6 +83,7 @@ cp -r src/urdf src/replay oop/
 tar -czvf oop.tgz oop
 tar -czvf aml.tgz aml
 
+TS0=$(date +"%s")
 for ((i = 1; i <= RUNS; i++)); do
   echo "----------- run $i of $RUNS"
   docker run -d --rm --name ${CONTAINER_NAME} --network="host" ${IMAGE} sleep infinity
@@ -107,6 +108,9 @@ for ((i = 1; i <= RUNS; i++)); do
   docker stop "${CONTAINER_NAME}"
   sleep 10 # fragile, but consistent in avoiding CONTAINER_NAME errors
 done
+TS1=$(date +"%s")
+TSE=$((TS1 - TS0))
+printf "Done!  Elapsed time (h:m): %02d:%02d\n" $((TSE / 60)) $((TSE % 60))
 
 ./src/parse_ipopt.awk aml_out/*.txt oop_out/*.txt > ipopt_output.csv
 cp src/ipopt_output.xlsx .
