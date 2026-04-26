@@ -8,7 +8,7 @@
 * Are you in Ubuntu 22.04 (or other Linux variant with a bash shell)?
   * Run `docker_local_bash.sh --key YOUR_AMPL_KEY --runs NUM_OF_RUNS` in the [docker](./docker) folder.
 
-Then explore the output files.
+Then explore the output files, like *docker/ipopt_output.xlsx* which is available after a successful run.
 
 # Overview
 How do programming paradigms affect the design of robotics-focused trajectory optimization libraries (TOLs) when it comes to library features, lines of code (LOC), reproducibility, and performance?  This repository explores this question through a case study that compares two trajectory optimization libraries, one written in an object-oriented programming paradigm (OOP-TOL) and the other in a declarative programming paradigm (AML-TOL).
@@ -51,3 +51,6 @@ The performance code runs in a bash shell.  We tried to only call Linux built-in
 * Are you in Windows? Then run `docker_local_cmd.bat --key YOUR_AMPL_KEY --runs NUM_OF_RUNS` in the [docker/](./docker) folder in a Command or Powershell.  This will launch an instance of WSL, which will then launch a Docker container.  Make sure the default WSL has a bash shell.
 * Are you in Ubuntu 22.04? Then run `docker_local_bash.sh --key YOUR_AMPL_KEY --runs NUM_OF_RUNS` in the [docker/](./docker) folder in a bash shell.  This will directly launch a Docker container.
   * MacOS and other Linux distros should also work, but have not been tested.
+* After the script has successfully completed, explore the output file *docker/ipopt_output.xlsx*.
+  * The file is linked to any file named *ipopt_output.csv* in the same directory.  You may have to *Enable Content* in the Excel spreadsheet and/or *Refresh* the data source (*Query -> Refresh*) to see updated changes.  If the file does not exist, an empty table will result.
+  * You'll probably be prompted to save the .xslx even if you didn't make any changes.  If no changes were made to the file, then it doesn't matter which option you choose.  The prompt is due to the sheet always reloading the .csv file on start up.
