@@ -52,5 +52,5 @@ The performance code runs in a bash shell.  We tried to only call Linux built-in
 * Are you in Ubuntu 22.04? Then run `docker_local_bash.sh --key YOUR_AMPL_KEY --runs NUM_OF_RUNS` in the [docker/](./docker) folder in a bash shell.  This will directly launch a Docker container.
   * MacOS and other Linux distros should also work, but have not been tested.
 * After the script has successfully completed, explore the output file *docker/ipopt_output.xlsx*.
-  * The file is linked to any file named *ipopt_output.csv* in the same directory.  You may have to *Enable Content* in the Excel spreadsheet and/or *Refresh* the data source (*Query -> Refresh*) to see updated changes.  If the file does not exist, an empty table will result.
+  * The file is linked *ipopt_output.csv* in the same directory.  You may have to *Enable Content* in the Excel spreadsheet and/or *Refresh* the data source (*Query -> Refresh*) to see updated changes.  If the file does not exist, an empty table will result.
   * You'll probably be prompted to save the .xslx even if you didn't make any changes.  If no changes were made to the file, then it doesn't matter which option you choose.  The prompt is due to the sheet always reloading the .csv file on start up.
