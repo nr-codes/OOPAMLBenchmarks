@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# start timing
+TS0=$(date +"%s")
+
 # turn off '&' replacement with docker_remote_template in bash 5.2 and later
 if shopt -p patsub_replacement &>/dev/null; then
   shopt -u patsub_replacement
@@ -83,7 +86,6 @@ cp -r src/urdf src/replay oop/
 tar -czvf oop.tgz oop
 tar -czvf aml.tgz aml
 
-TS0=$(date +"%s")
 for ((i = 1; i <= RUNS; i++)); do
   echo "----------- run $i of $RUNS"
   docker run -d --rm --name ${CONTAINER_NAME} --network="host" ${IMAGE} sleep infinity
@@ -108,9 +110,6 @@ for ((i = 1; i <= RUNS; i++)); do
   docker stop "${CONTAINER_NAME}"
   sleep 10 # fragile, but consistent in avoiding CONTAINER_NAME errors
 done
-TS1=$(date +"%s")
-TSE=$((TS1 - TS0))
-printf "Done!  Elapsed time (h:m): %02d:%02d\n" $((TSE / 60)) $((TSE % 60))
 
 ./src/parse_ipopt.awk aml_out/*.txt oop_out/*.txt > ipopt_output.csv
 cp src/ipopt_output.xlsx .
@@ -121,3 +120,8 @@ tar -czvf ipopt_runs.tgz oop_out/*.txt oop_out/*.mat \
 
 rm oop.tgz aml.tgz oop_out.tgz aml_out.tgz
 rm -r oop_out aml_out
+
+# stop timing
+TS1=$(date +"%s")
+TSE=$((TS1 - TS0))
+printf "Done!  Elapsed time (h:m): %02d:%02d\n" $((TSE / 60)) $((TSE % 60))
