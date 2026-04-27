@@ -111,7 +111,7 @@ for ((i = 1; i <= RUNS; i++)); do
   sleep 10 # fragile, but consistent in avoiding CONTAINER_NAME errors
 done
 
-./src/parse_ipopt.awk aml_out/*.txt oop_out/*.txt > ipopt_output.csv
+awk -f src/parse_ipopt.awk aml_out/*.txt oop_out/*.txt > ipopt_output.csv
 cp src/ipopt_output.xlsx .
 
 tar -czvf ipopt_runs.tgz oop_out/*.txt oop_out/*.mat \
@@ -124,4 +124,4 @@ rm -r oop_out aml_out
 # stop timing
 TS1=$(date +"%s")
 TSE=$((TS1 - TS0))
-printf "Done!  Elapsed time (h:m): %02d:%02d\n" $((TSE / 60)) $((TSE % 60))
+printf "Done! Elapsed time: %d seconds.\n" $TSE
