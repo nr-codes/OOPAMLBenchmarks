@@ -23,7 +23,7 @@ The code was developed in Windows 11 and tested in WSL's Ubuntu 22.04.5 LTS and 
 LTS build (i.e. running on a laptop directly, not virtualized).  Because of the Windows 11 development environment, the code is a bit like the monster in Frankenstein.  A few of the parts only run in Windows (the LOC code) and the rest in a Linux OS (the performance code).
 
 # LOC Code
-The LOC code runs in a Windows command shell.  All necessary files are in the [loc](./loc) folder.  It should be straightforward to port the code to other scripting languages.
+The LOC code runs in a Windows command shell.  All necessary files are in the [loc](./loc) folder.  In particular, LOC is computed using [cloc v2.08](https://github.com/AlDanial/cloc).  It should be straightforward to port the code to other scripting languages.
 
 ## Pre-Requisites
 None
@@ -54,3 +54,31 @@ The performance code runs in a bash shell.  We tried to only call Linux built-in
 * After the script has successfully completed, explore the output file *docker/ipopt_output.xlsx*.
   * The file is linked to *ipopt_output.csv* in the same directory.  You may have to *Enable Content* in the Excel spreadsheet and/or *Refresh* the data source (*Query -> Refresh*) to see updated changes.  If the file does not exist, an empty table will result.
   * You'll probably be prompted to save the .xslx even if you didn't make any changes.  If no changes were made to the file, then it doesn't matter which option you choose.  The prompt is due to the sheet always reloading the .csv file on start up.
+
+# Summary of Results
+The tables below summarize the lines of source code in the demos and libraries and performance benchmarks of the OOP- and AML-TOLs.  The [LOC data](./loc/out) is computed using [cloc v2.08](https://github.com/AlDanial/cloc).  Performance data is stored in [a .csv file](./docker/ipopt_runs/ipopt_output.csv) and parsed in [an Excel spreadsheet](./docker/ipopt_runs/ipopt_output.xlsx).
+
+## LOC
+| Code               | OOP Lines of Code  | AML Lines of Code  |
+|--------------------|--------------------|--------------------|
+| Cart-Pole          | 54                 | 39                 |
+| Spot Jump Twist    | 133                | 66                 |
+| Library            | 4393               | 331                |
+
+## Performance Code*
+| Demo               | ODE  | TOL | Objective | Wall Time | Iterations | Eval. Time | Variables | Eq. Constr. | Ineq. Constr. | Presolve |
+|--------------------|------|-----|-----------|-----------|------------|------------|-----------|-------------|---------------|----------|
+| Cart-Pole          | COL3 | OOP | 1583.34   | 2.02      | 371        | 0.15       | 900       | 853         | 50            |          |
+|                    |      | AML | 1921.40   | 4.24      | 409        | 0.76       | 1197      | 1150        | 50            | 0.94     |
+|                    | RK1  | OOP | 1583.34   | 1.20      | 371        | 0.09       | 300       | 253         | 50            |          |
+|                    |      | AML | 1583.34   | 2.04      | 371        | 0.57       | 295       | 248         | 50            | 0.98     |
+|                    | RK4  | OOP | 1921.40   | 1.29      | 411        | 0.10       | 300       | 253         | 50            |          |
+|                    |      | AML | 1921.40   | 4.52      | 409        | 0.74       | 1195      | 1148        | 50            | 0.94     |
+| Spot Jump Twist    | COL3 | OOP | -         | -         | -          | -          | -         | -           | -             |          |
+|                    |      | AML | 14173.05  | 671.53    | 200        | 591.97     | 12454     | 11828       | 1080          | 0.96     |
+|                    | RK1  | OOP | -         | -         | -          | -          | -         | -           | -             |          |
+|                    |      | AML | 14277.07  | 479.95    | 146        | 427.70     | 3106      | 2480        | 1080          | 0.99     |
+|                    | RK4  | OOP | 13127.37  | 72.50     | 330        | 11.20      | 3400      | 2787        | 1180          |          |
+|                    |      | AML | 14266.78  | 471.78    | 137        | 406.86     | 12436     | 11810       | 1080          | 0.96     |
+
+\* This table summarizes the latest run averaged over 10 trials.  The original run used in a paper under review is stored [here](./docker/ipopt_runs_submission).  The major difference is the numbers are averaged over 10 trials as oppose to 4 in the submitted paper.
